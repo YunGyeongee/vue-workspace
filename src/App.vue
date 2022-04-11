@@ -1,15 +1,12 @@
 <template> <!-- HTML -->
   
-  
   <div class="black-bg" v-if="모달창 == true">
     <div class="white-bg">
       <h4>상세 페이지</h4>
       <p>상세페이지 내용입니다.</p>
-      <button @click="모달창 == false">닫기</button>
+      <button @click="모달창 = false">닫기</button>
     </div>
   </div>
-
-
   
   <!-- 상단 Nav 메뉴 만들기 -->
   <div class="menu"> 
@@ -17,23 +14,10 @@
   </div>
 
   <!-- js에 있는 데이터 HTML에 꽂아넣고 싶으면 {{ 데이터이름 }} 사용 -->
-  <div>
-    <img src="./assets/room0.jpg" class="room-img">
-    <h4 class="red" :style="스타일" @click="모달창 = true">{{ products[0] }}</h4>
-    <p>{{ price1 }}만원</p> 
-    <button @click="신고수[0]++">허위매물신고</button> <span>신고수 : {{ 신고수[0] }}</span>
-  </div>
-  <div>
-    <img src="./assets/room1.jpg" class="room-img">
-    <h4>{{ products[1] }}</h4>
-    <p>{{ price2 }}만원</p>
-    <button @click="신고수[1] += 1">허위매물신고</button> <span>신고수 : {{ 신고수[1] }}</span>
-  </div>
-  <div>
-    <img src="./assets/room2.jpg" class="room-img">
-    <h4>{{ products[2] }}</h4>
-    <p>{{ price2 }}만원</p>
-    <button @click="신고수[2] += 1">허위매물신고</button> <span>신고수 : {{ 신고수[2] }}</span>
+  <div v-for="room in onerooms" :key="room">
+    <img :src="room.image" class="room-img">
+    <h4 class="red" :style="스타일" @click="모달창 = true">{{ room.title }}</h4>
+    <p>{{ room.price }}원</p> 
   </div>
 </template>
 
@@ -42,6 +26,8 @@
 
 // var array = [10, 20, 30];
 // array[0];
+
+import data from './assets/oneroom.js'; // 확장자 생략해도 됨
 
 export default {
   name: 'App',
@@ -54,6 +40,7 @@ export default {
       스타일 : 'color : blue',
       menubar : ['Home', 'Shop', 'About'],
       products : ['역삼동 원룸', '천호동 원룸', '마포구 원룸'],
+      onerooms : data,
     }
   },
   method : { // 함수 만들기
