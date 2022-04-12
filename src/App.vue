@@ -1,24 +1,22 @@
 <template> <!-- HTML -->
   
-  <div class="black-bg" v-if="모달창 == true">
-    <div class="white-bg">
-      <h4>상세 페이지</h4>
-      <p>상세페이지 내용입니다.</p>
-      <button @click="모달창 = false">닫기</button>
-    </div>
-  </div>
-  
+
+  <Modal :onerooms="onerooms" :click="click"/>
+
   <!-- 상단 Nav 메뉴 만들기 -->
   <div class="menu"> 
     <a v-for="작명 in menubar" :key="작명">{{ 작명 }}</a>
   </div>
 
-  <!-- js에 있는 데이터 HTML에 꽂아넣고 싶으면 {{ 데이터이름 }} 사용 -->
-  <div v-for="room in onerooms" :key="room">
-    <img :src="room.image" class="room-img">
-    <h4 class="red" :style="스타일" @click="모달창 = true">{{ room.title }}</h4>
-    <p>{{ room.price }}원</p> 
-  </div>
+  <Discount />
+
+  <Card :room="onerooms[0]" />
+  <Card :room="onerooms[1]" />
+  <Card :room="onerooms[2]" />
+  <Card :room="onerooms[3]" />
+  <Card :room="onerooms[4]" />
+  <Card :room="onerooms[5]" />
+
 </template>
 
 <script> // JS
@@ -28,12 +26,17 @@
 // array[0];
 
 import data from './assets/oneroom.js'; // 확장자 생략해도 됨
+import Discount from './Discount.vue';
+import Modal from './Modal.vue';
+import Card from './Card.vue';
 
 export default {
   name: 'App',
   data(){ // 데이터 보관함
     return { // object 자료료 저장하기 -> {자료이름 : 자료내용}
+      Object : {name : 'kim', age : 20},
       모달창 : false,
+      click : 0,
       신고수 : [0, 0, 0],
       price1 : 60,
       price2 : 70,
@@ -50,6 +53,9 @@ export default {
   },
 
   components: {
+    Discount : Discount, // Discount 로 한 문자로 생략가능함
+    Modal : Modal,
+    Card : Card,
   }
 }
 </script>
@@ -61,6 +67,7 @@ body {
 div {
   box-sizing: border-box;
 }
+
 .black-bg {
   width: 100%; height: 100%;
   background: raba(0,0,0,0.5);
